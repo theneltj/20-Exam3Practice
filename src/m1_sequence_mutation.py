@@ -38,21 +38,21 @@ def run_test_zero_changer():
     # or an empty tuple, or a list with no zeros, etc.
     # -------------------------------------------------------------------------
 
-    # Test 1:
+    # Test 2:
     test1 = ([], [0, 0], [0, 0], [])
     expected1 = ([], [1, 2], [3, 4], [])
     zero_changer(test1)
     print()
-    print('Test 1:')
+    print('Test 2:')
     print('  Expected:', expected1)
     print('  Actual:  ', test1)
 
-    # Test 1:
+    # Test 3:
     test1 = ([10, 1, 0, 1], [0])
     expected1 = ([10, 1, 1, 1], [2])
     zero_changer(test1)
     print()
-    print('Test 1:')
+    print('Test 3:')
     print('  Expected:', expected1)
     print('  Actual:  ', test1)
 
