@@ -6,8 +6,8 @@ This problem provides practice at:
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Tyler Thenell.
+"""  # DONE: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 ###############################################################################
 # Students:
@@ -90,7 +90,7 @@ def hourglass(window, n, point, radius, color):
     a color that rosegraphics understands.
     """
     # -------------------------------------------------------------------------
-    # TODO: 2. Implement and test this function.
+    # DONE: 2. Implement and test this function.
     #       We provided some tests for you (above).
     # -------------------------------------------------------------------------
     ###########################################################################
@@ -102,7 +102,35 @@ def hourglass(window, n, point, radius, color):
     #    DIFFICULTY:      8
     #    TIME ESTIMATE:  25 minutes (warning: this problem is challenging)
     # -------------------------------------------------------------------------
+    original_x = point.x
+    original_y = point.y
+    for k in range(n+1):
+        for j in range(k):
+            new_circle = rg.Circle(rg.Point(point.x, point.y - ((3**0.5) * radius)), radius)
+            new_circle.fill_color = color
+            line = rg.Line(rg.Point(new_circle.center.x - radius, new_circle.center.y),
+                           rg.Point(new_circle.center.x + radius, new_circle.center.y))
+            new_circle.attach_to(window)
+            line.attach_to(window)
+            point.x += 2*radius
+        point.y += (3**0.5) * radius
+        point.x = original_x -(radius * k)
+    point.x = original_x
+    point.y = original_y
+    for k in range(n + 1):
+        for j in range(k):
+            new_circle = rg.Circle(rg.Point(point.x, point.y + ((3 ** 0.5) * radius)), radius)
+            new_circle.fill_color = color
+            line = rg.Line(rg.Point(new_circle.center.x - radius, new_circle.center.y),
+                           rg.Point(new_circle.center.x + radius, new_circle.center.y))
+            new_circle.attach_to(window)
+            line.attach_to(window)
+            point.x += 2 * radius
+        point.y -= (3 ** 0.5) * radius
+        point.x = original_x - (radius * k)
 
+
+    window.render()
 
 def run_test_many_hourglasses():
     """ Tests the    many_hourglasses    function. """
@@ -164,7 +192,7 @@ def many_hourglasses(window, square, m, colors):
     each of which denotes a color that rosegraphics understands.
     """
     # -------------------------------------------------------------------------
-    # TODO: 3. Implement and test this function.
+    # DONE: 3. Implement and test this function.
     #       We provided some tests for you (above).
     # -------------------------------------------------------------------------
     ###########################################################################
@@ -180,7 +208,20 @@ def many_hourglasses(window, square, m, colors):
     #                         a correct "hourglass" function above)
     #    TIME ESTIMATE:  20 minutes (warning: this problem is challenging)
     # -------------------------------------------------------------------------
-
+    diff = square.length_of_each_side/2
+    x_coord = square.center.x
+    y_coord = square.center.y
+    color_index = 0
+    for k in range(1,m+1):
+        hourglass(window, k, rg.Point(x_coord, y_coord), square.length_of_each_side/2, colors[color_index])
+        rectangle = rg.Rectangle(rg.Point(x_coord - diff - ((k-1)*diff), y_coord + diff + ((k-1)*(3 ** 0.5) * diff)),
+                                 rg.Point(x_coord + diff + ((k-1)*diff), y_coord - diff - ((k-1)*(3 ** 0.5) * diff)))
+        rectangle.attach_to(window)
+        x_coord += (2*k)*diff + diff
+        color_index += 1
+        if color_index == len(colors):
+            color_index = 0
+    window.render()
 
 # -----------------------------------------------------------------------------
 # Calls  main  to start the ball rolling.
